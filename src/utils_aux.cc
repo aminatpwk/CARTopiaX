@@ -3,13 +3,7 @@
  * Melina Luque
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file e      // Count total cells, tumor cells of each
- type and tumor radius size_t total_num_tumor_cells = 0; size_t
- num_tumor_cells_type1 = 0; size_t num_tumor_cells_type2 = 0; size_t
- num_tumor_cells_type3 = 0; size_t num_tumor_cells_type4 = 0; size_t
- num_tumor_cells_type5_dead = 0; size_t num_alive_cart = 0; real_t tumor_radius
- = 0.0; real_t average_oncoprotein = 0.0; real_t average_oxygen_cancer_cells =
- 0.0;in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
