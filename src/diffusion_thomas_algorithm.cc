@@ -173,6 +173,10 @@ void DiffusionThomasAlgorithm::SetConcentration(size_t idx, real_t amount) {
 // Flattens the 3D coordinates (x, y, z) into a 1D index
 size_t DiffusionThomasAlgorithm::GetBoxIndex(size_t x, size_t y,
                                              size_t z) const {
+  assert(static_cast<int>(x) < resolution_ &&
+           static_cast<int>(y) < resolution_ &&
+           static_cast<int>(z) < resolution_ &&
+           "GetBoxIndex: coordinate out of bounds");
   return z * resolution_ * resolution_ + y * resolution_ + x;
 }
 
