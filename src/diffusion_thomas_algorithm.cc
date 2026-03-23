@@ -29,6 +29,8 @@
 #include "core/param/param.h"
 #include "core/real_t.h"
 #include "core/resource_manager.h"
+#include <array>
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <string>
