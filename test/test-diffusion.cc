@@ -1,5 +1,5 @@
-#include "diffusion_thomas_algorithm.h"
 #include "biodynamo.h"
+#include "diffusion_thomas_algorithm.h"
 #include "hyperparams.h"
 #include <gtest/gtest.h>
 
@@ -7,7 +7,7 @@
 
 namespace bdm {
 class DiffusionThomasAlgorithmTest : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override {
     sim_ = std::make_unique<Simulation>(TEST_NAME);
     auto params = std::make_unique<SimParam>();
@@ -34,4 +34,4 @@ TEST_F(DiffusionThomasAlgorithmTest, GetBoxIndexOutOfBoundsDeath) {
 }
 #endif
 
-}
+} // namespace bdm

@@ -176,9 +176,9 @@ void DiffusionThomasAlgorithm::SetConcentration(size_t idx, real_t amount) {
 size_t DiffusionThomasAlgorithm::GetBoxIndex(size_t x, size_t y,
                                              size_t z) const {
   assert(static_cast<int>(x) < resolution_ &&
-           static_cast<int>(y) < resolution_ &&
-           static_cast<int>(z) < resolution_ &&
-           "GetBoxIndex: coordinate out of bounds");
+         static_cast<int>(y) < resolution_ &&
+         static_cast<int>(z) < resolution_ &&
+         "GetBoxIndex: coordinate out of bounds");
   return z * resolution_ * resolution_ + y * resolution_ + x;
 }
 
@@ -225,16 +225,16 @@ void DiffusionThomasAlgorithm::ApplyBoundaryConditionsIfNeeded() {
 
 void DiffusionThomasAlgorithm::SolveDirectionThomas(int direction) {
   const std::array<const std::vector<real_t>*, 3> all_denoms = {
-    &thomas_denom_x_, &thomas_denom_y_, &thomas_denom_z_};
+      &thomas_denom_x_, &thomas_denom_y_, &thomas_denom_z_};
 
   const std::array<const std::vector<real_t>*, 3> all_c = {
-    &thomas_c_x_, &thomas_c_y_, &thomas_c_z_};
+      &thomas_c_x_, &thomas_c_y_, &thomas_c_z_};
 
   const std::array<int, 3> all_jumps = {jump_i_, jump_j_, jump_};
 
   const std::vector<real_t>& thomas_denom = *all_denoms.at(direction);
-  const std::vector<real_t>& thomas_c     = *all_c.at(direction);
-  const int jump                          = all_jumps.at(direction);
+  const std::vector<real_t>& thomas_c = *all_c.at(direction);
+  const int jump = all_jumps.at(direction);
 
 #pragma omp parallel for collapse(2)
   for (int outer = 0; outer < resolution_; outer++) {
