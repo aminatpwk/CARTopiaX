@@ -34,4 +34,4 @@ TEST_F(DiffusionThomasAlgorithmTest, GetBoxIndexOutOfBoundsDeath) {
 }
 #endif
 
-} // namespace bdm
+}  // namespace bdm
