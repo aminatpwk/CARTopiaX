@@ -29,6 +29,8 @@
 #include "core/param/param.h"
 #include "core/real_t.h"
 #include "core/resource_manager.h"
+#include <array>
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -173,6 +175,10 @@ void DiffusionThomasAlgorithm::SetConcentration(size_t idx, real_t amount) {
 // Flattens the 3D coordinates (x, y, z) into a 1D index
 size_t DiffusionThomasAlgorithm::GetBoxIndex(size_t x, size_t y,
                                              size_t z) const {
+  assert(static_cast<int>(x) < resolution_ &&
+         static_cast<int>(y) < resolution_ &&
+         static_cast<int>(z) < resolution_ &&
+         "GetBoxIndex: coordinate out of bounds");
   return z * resolution_ * resolution_ + y * resolution_ + x;
 }
 
@@ -218,38 +224,17 @@ void DiffusionThomasAlgorithm::ApplyBoundaryConditionsIfNeeded() {
 }
 
 void DiffusionThomasAlgorithm::SolveDirectionThomas(int direction) {
-  const auto& thomas_denom = [this, direction]() -> const std::vector<real_t>& {
-    if (direction == 0) {
-      return thomas_denom_x_;
-    }
-    if (direction == 1) {
-      return thomas_denom_y_;
-    }
-    // direction == 2
-    return thomas_denom_z_;
-  }();
+  const std::array<const std::vector<real_t>*, 3> all_denoms = {
+      &thomas_denom_x_, &thomas_denom_y_, &thomas_denom_z_};
 
-  const auto& thomas_c = [this, direction]() -> const std::vector<real_t>& {
-    if (direction == 0) {
-      return thomas_c_x_;
-    }
-    if (direction == 1) {
-      return thomas_c_y_;
-    }
-    // direction == 2
-    return thomas_c_z_;
-  }();
+  const std::array<const std::vector<real_t>*, 3> all_c = {
+      &thomas_c_x_, &thomas_c_y_, &thomas_c_z_};
 
-  const int jump = [this, direction]() -> int {
-    if (direction == 0) {
-      return jump_i_;
-    }
-    if (direction == 1) {
-      return jump_j_;
-    }
-    // direction == 2
-    return jump_;
-  }();
+  const std::array<int, 3> all_jumps = {jump_i_, jump_j_, jump_};
+
+  const std::vector<real_t>& thomas_denom = *all_denoms.at(direction);
+  const std::vector<real_t>& thomas_c = *all_c.at(direction);
+  const int jump = all_jumps.at(direction);
 
 #pragma omp parallel for collapse(2)
   for (int outer = 0; outer < resolution_; outer++) {

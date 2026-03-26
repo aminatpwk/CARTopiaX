@@ -121,6 +121,14 @@ class DiffusionThomasAlgorithm : public DiffusionGrid {
   /// always after the diffusion module
   void ComputeConsumptionsSecretions();
 
+  /// Convert 3D coordinates to linear index
+  ///
+  /// @param x X-coordinate in voxel space
+  /// @param y Y-coordinate in voxel space
+  /// @param z Z-coordinate in voxel space
+  /// @return Linear index in the flattened 3D array
+  size_t GetBoxIndex(size_t x, size_t y, size_t z) const;
+
  private:
   /// Number of voxels in each spatial direction
   int resolution_;
@@ -188,14 +196,6 @@ class DiffusionThomasAlgorithm : public DiffusionGrid {
   /// Sets the boundary values according to Dirichlet boundary conditions,
   /// maintaining constant values at the grid boundaries.
   void ApplyDirichletBoundaryConditions();
-
-  /// Convert 3D coordinates to linear index
-  ///
-  /// @param x X-coordinate in voxel space
-  /// @param y Y-coordinate in voxel space
-  /// @param z Z-coordinate in voxel space
-  /// @return Linear index in the flattened 3D array
-  size_t GetBoxIndex(size_t x, size_t y, size_t z) const;
 
   /// Apply boundary conditions if Dirichlet boundaries are enabled
   void ApplyBoundaryConditionsIfNeeded();
