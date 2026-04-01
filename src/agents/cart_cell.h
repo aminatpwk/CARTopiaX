@@ -33,7 +33,7 @@
 #include "core/interaction_force.h"
 #include "core/real_t.h"
 #include "core/util/random.h"
-#include "../interfaces/substance_interactor.h"
+#include "interfaces/substance_interactor.h"
 
 namespace bdm {
 

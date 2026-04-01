@@ -27,7 +27,7 @@
 #include "core/param/param.h"
 #include "core/real_t.h"
 #include "core/resource_manager.h"
-#include "../interfaces/substance_interactor.h"
+#include "interfaces/substance_interactor.h"
 #include <array>
 #include <cassert>
 #include <cstddef>
