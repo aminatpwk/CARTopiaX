@@ -19,9 +19,9 @@
  * for the compiler-research.org organization.
  */
 
-#include "tumor_cell.h"
-#include "hyperparams.h"
-#include "utils_aux.h"
+#include "agents/tumor_cell.h"
+#include "params/hyperparams.h"
+#include "utils/utils_aux.h"
 #include "core/agent/agent.h"
 #include "core/agent/cell_division_event.h"
 #include "core/agent/new_agent_event.h"

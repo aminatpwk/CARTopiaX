@@ -19,7 +19,7 @@
  * for the compiler-research.org organization.
  */
 
-#include "hyperparams.h"
+#include "params/hyperparams.h"
 #include "core/param/param_group.h"
 #include "core/real_t.h"
 #include "core/util/math.h"

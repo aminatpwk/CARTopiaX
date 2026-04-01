@@ -22,7 +22,7 @@
 #ifndef CART_CELL_H_
 #define CART_CELL_H_
 
-#include "tumor_cell.h"
+#include "agents/tumor_cell.h"
 #include "core/agent/agent.h"
 #include "core/agent/agent_pointer.h"
 #include "core/agent/cell.h"
@@ -33,7 +33,7 @@
 #include "core/interaction_force.h"
 #include "core/real_t.h"
 #include "core/util/random.h"
-#include "core/substance_interactor.h"
+#include "../interfaces/substance_interactor.h"
 
 namespace bdm {
 

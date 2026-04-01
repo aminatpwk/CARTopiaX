@@ -19,15 +19,15 @@
  * for the compiler-research.org organization.
  */
 
-#include "diffusion_thomas_algorithm.h"
-#include "hyperparams.h"
+#include "diffusion/diffusion_thomas_algorithm.h"
+#include "params/hyperparams.h"
 #include "core/agent/agent.h"
 #include "core/container/math_array.h"
 #include "core/diffusion/diffusion_grid.h"
 #include "core/param/param.h"
 #include "core/real_t.h"
 #include "core/resource_manager.h"
-#include "core/substance_interactor.h"
+#include "../interfaces/substance_interactor.h"
 #include <array>
 #include <cassert>
 #include <cstddef>
