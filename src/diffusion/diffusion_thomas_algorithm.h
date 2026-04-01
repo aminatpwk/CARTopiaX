@@ -28,7 +28,7 @@
 #include <cstddef>
 #include <string>
 #include <vector>
-#include "../interfaces/substance_interactor.h"
+#include "interfaces/substance_interactor.h"
 
 namespace bdm {
 

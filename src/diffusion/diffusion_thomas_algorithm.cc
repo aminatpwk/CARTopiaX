@@ -33,7 +33,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "../interfaces/substance_interactor.h"
+#include "interfaces/substance_interactor.h"
 #include "params/hyperparams.h"
 
 namespace bdm {
