@@ -76,19 +76,27 @@ The project is organized into the following components:
 
 ### Core Simulation Files (`src/`)
 
+#### Agents (`src/agents/`)
+
 - **[`tumor_cell.h`](src/agents/tumor_cell.h) / [`tumor_cell.cc`](src/agents/tumor_cell.cc)**: Defines tumor cells with four states (alive, necrotic swelling, necrotic lysed, apoptotic), four types based on oncoprotein levels, volume dynamics using exponential relaxation, oxygen/immunostimulatory factor exchange, and the [`StateControlGrowProliferate`](src/agents/tumor_cell.h) behavior for cancer growth and state transitions.
 
 - **[`cart_cell.h`](src/agents/cart_cell.h) / [`cart_cell.cc`](src/agents/cart_cell.cc)**: Implements CAR-T cells with alive/apoptotic states, tumor cell attachment/detachment mechanisms, stochastic killing attempts, chemotaxis toward immunostimulatory factors, finite lifespan, and the [`StateControlCart`](src/agents/cart_cell.h) behavior.
 
-- **[`cart_tumor.h`](src/cart_tumor.h) / [`cart_tumor.cc`](src/cart_tumor.cc)**: Contains the main [`Simulate`](src/cart_tumor.cc) function that configures BioDynaMo, creates diffusion grids for oxygen and immunostimulatory factors, initializes the tumor sphere, sets up custom mechanical forces, and schedules treatment/output operations.
-
+#### Forces (`src/forces/`)
 - **[`forces_tumor_cart.h`](src/forces/forces_tumor_cart.h) / [`forces_tumor_cart.cc`](src/forces/forces_tumor_cart.cc)**: Implements the [`InteractionVelocity`](src/forces/forces_tumor_cart.h) class with velocity-dependent repulsion and adhesion forces between cells, with differentiated force coefficients for tumor-tumor, CAR-CAR, and tumor-CAR interactions.
 
+#### Diffusion (`src/diffusion/`)
 - **[`diffusion_thomas_algorithm.h`](src/diffusion/diffusion_thomas_algorithm.h) / [`diffusion_thomas_algorithm.cc`](src/diffusion/diffusion_thomas_algorithm.cc)**: Solves the 3D diffusion equation (∂t u = ∇D∇u - μu) for chemical substances (oxygen and immunostimulatory factors) using the Thomas algorithm and Alternating Direction Implicit (ADI) method for tridiagonal systems in each spatial direction. Supports Dirichlet boundary conditions and integrates cellular consumption/secretion (∂ρ/∂t = ∇·(D∇ρ) − λ·ρ + Σ[(V_k/V_voxel)·(S_k·(ρ*_k − ρ) − (S_k + U_k)·ρ)]) through [`ComputeConsumptionsSecretions`](src/diffusion/diffusion_thomas_algorithm.cc), which updates concentrations based on cell-specific uptake and secretion rates.
 
+#### Parameters (`src/params/`)
 - **[`hyperparams.h`](src/params/hyperparams.h) / [`hyperparams.cc`](src/params/hyperparams.cc)**: Contains the [`SimParam`](src/params/hyperparams.h) class with default biological/simulation parameters and treatment schedule definition. Provides [`LoadParams`](src/params/hyperparams.cc) to read configuration from [`params.json`](params.json) and [`PrintParams`](src/params/hyperparams.cc) to display current parameter values.
 
+#### Utilities (`src/utils/`)
 - **[`utils_aux.h`](src/utils/utils_aux.h) / [`utils_aux.cc`](src/utils/utils_aux.cc)**: Provides utility functions ([`SamplePositiveGaussian`](src/utils/utils_aux.cc), [`CreateSphereOfTumorCells`](src/utils/utils_aux.cc), [`AnalyzeTumor`](src/utils/utils_aux.cc), [`GenerateRandomDirection`](src/utils/utils_aux.cc)) and operations ([`SpawnCart`](src/utils/utils_aux.cc) for dosage administration, [`OutputSummary`](src/utils/utils_aux.cc) for CSV data export to `/output/final_data.csv`).
+
+#### Simulation Entry Point
+- **[`cart_tumor.h`](src/cart_tumor.h) / [`cart_tumor.cc`](src/cart_tumor.cc)**: Contains the main [`Simulate`](src/cart_tumor.cc) function that configures BioDynaMo, creates diffusion grids for oxygen and immunostimulatory factors, initializes the tumor sphere, sets up custom mechanical forces, and schedules treatment/output operations.
+
 ### Configuration Files
 
 - **[`params.json`](params.json)**: JSON-formatted parameter file for configuring simulation runs without recompilation.
