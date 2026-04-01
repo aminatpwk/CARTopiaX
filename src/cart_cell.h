@@ -32,6 +32,7 @@
 #include "core/diffusion/diffusion_grid.h"
 #include "core/interaction_force.h"
 #include "core/real_t.h"
+#include "core/substance_interactor.h"
 #include "core/util/random.h"
 
 namespace bdm {
@@ -55,7 +56,7 @@ enum class CarTCellState : int {
 /// simulation. It inherits from the base Cell class and includes specific
 /// behaviors and properties related to CAR-T cell biology, including states,
 /// volume dynamics, and interactions with tumor cells.
-class CarTCell : public Cell {
+class CarTCell : public Cell, public ISubstanceInteractor {
   // NOLINTNEXTLINE(modernize-type-traits)
   BDM_AGENT_HEADER(CarTCell, Cell, 1);
 
@@ -181,7 +182,8 @@ class CarTCell : public Cell {
   /// factor)
   /// @param old_concentration The previous concentration of the substance
   /// @return The new concentration after consumption/secretion
-  real_t ConsumeSecreteSubstance(int substance_id, real_t old_concentration);
+  real_t ConsumeSecreteSubstance(int substance_id,
+                                 real_t old_concentration) override;
 
   /// Compute constants for consumption and secretion
   ///

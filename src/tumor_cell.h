@@ -31,6 +31,7 @@
 #include "core/interaction_force.h"
 #include "core/real_t.h"
 #include "core/scheduler.h"
+#include "core/substance_interactor.h"
 
 namespace bdm {
 
@@ -80,7 +81,7 @@ enum class TumorCellType : int {
 /// - Displacement computation applying pushing/adhesive forces between cells
 /// - Oncoprotein expression levels
 /// - Interactions with CAR-T cells
-class TumorCell : public Cell {
+class TumorCell : public Cell, public ISubstanceInteractor {
   // NOLINTNEXTLINE(modernize-type-traits)
   BDM_AGENT_HEADER(TumorCell, Cell, 1);
 
@@ -218,7 +219,8 @@ class TumorCell : public Cell {
   /// factor)
   /// @param old_concentration The previous concentration of the substance
   /// @return The new concentration after consumption/secretion
-  real_t ConsumeSecreteSubstance(int substance_id, real_t old_concentration);
+  real_t ConsumeSecreteSubstance(int substance_id,
+                                 real_t old_concentration) override;
 
   /// Compute constants for consumption and secretion
   ///

@@ -24,6 +24,7 @@
 
 #include "core/diffusion/diffusion_grid.h"
 #include "core/real_t.h"
+#include "core/substance_interactor.h"
 #include "core/util/root.h"
 #include <cstddef>
 #include <string>
