@@ -19,10 +19,7 @@
  * for the compiler-research.org organization.
  */
 
-#include "forces_tumor_cart.h"
-#include "hyperparams.h"
-#include "tumor_cell.h"
-#include "utils_aux.h"
+#include "forces/forces_tumor_cart.h"
 #include "core/agent/agent.h"
 #include "core/agent/cell.h"
 #include "core/container/math_array.h"
@@ -32,6 +29,9 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include "agents/tumor_cell.h"
+#include "params/hyperparams.h"
+#include "utils/utils_aux.h"
 
 namespace bdm {
 

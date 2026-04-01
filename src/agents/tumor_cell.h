@@ -31,7 +31,7 @@
 #include "core/interaction_force.h"
 #include "core/real_t.h"
 #include "core/scheduler.h"
-#include "core/substance_interactor.h"
+#include "../interfaces/substance_interactor.h"
 
 namespace bdm {
 
