@@ -20,6 +20,8 @@
  */
 
 #include "diffusion/diffusion_thomas_algorithm.h"
+#include "interfaces/substance_interactor.h"
+#include "params/hyperparams.h"
 #include "core/agent/agent.h"
 #include "core/container/math_array.h"
 #include "core/diffusion/diffusion_grid.h"
@@ -33,8 +35,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "interfaces/substance_interactor.h"
-#include "params/hyperparams.h"
 
 namespace bdm {
 

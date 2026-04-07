@@ -20,6 +20,11 @@
  */
 
 #include "cart_tumor.h"
+#include "agents/tumor_cell.h"
+#include "diffusion/diffusion_thomas_algorithm.h"
+#include "forces/forces_tumor_cart.h"
+#include "params/hyperparams.h"
+#include "utils/utils_aux.h"
 #include "core/container/math_array.h"
 #include "core/diffusion/diffusion_grid.h"
 #include "core/environment/uniform_grid_environment.h"
@@ -35,11 +40,6 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "agents/tumor_cell.h"
-#include "diffusion/diffusion_thomas_algorithm.h"
-#include "forces/forces_tumor_cart.h"
-#include "params/hyperparams.h"
-#include "utils/utils_aux.h"
 
 namespace bdm {
 

@@ -1,7 +1,7 @@
-#include "biodynamo.h"
-#include <gtest/gtest.h>
 #include "diffusion/diffusion_thomas_algorithm.h"
 #include "params/hyperparams.h"
+#include <gtest/gtest.h>
+#include "biodynamo.h"
 
 #define TEST_NAME typeid(*this).name()
 

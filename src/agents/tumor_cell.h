@@ -22,6 +22,7 @@
 #ifndef TUMOR_CELL_H_
 #define TUMOR_CELL_H_
 
+#include "interfaces/substance_interactor.h"
 #include "core/agent/agent.h"
 #include "core/agent/cell.h"
 #include "core/agent/new_agent_event.h"
@@ -31,7 +32,6 @@
 #include "core/interaction_force.h"
 #include "core/real_t.h"
 #include "core/scheduler.h"
-#include "interfaces/substance_interactor.h"
 
 namespace bdm {
 

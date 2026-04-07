@@ -20,6 +20,9 @@
  */
 
 #include "agents/cart_cell.h"
+#include "agents/tumor_cell.h"
+#include "params/hyperparams.h"
+#include "utils/utils_aux.h"
 #include "core/agent/agent.h"
 #include "core/agent/agent_pointer.h"
 #include "core/agent/new_agent_event.h"
@@ -38,9 +41,6 @@
 #include <cstdint>
 #include <stdexcept>
 #include <string>
-#include "agents/tumor_cell.h"
-#include "params/hyperparams.h"
-#include "utils/utils_aux.h"
 
 namespace bdm {
 
