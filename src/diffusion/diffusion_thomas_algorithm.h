@@ -22,6 +22,7 @@
 #ifndef DIFFUSION_THOMAS_ALGORITHM_H_
 #define DIFFUSION_THOMAS_ALGORITHM_H_
 
+#include "interfaces/substance_interactor.h"
 #include "core/diffusion/diffusion_grid.h"
 #include "core/real_t.h"
 #include "core/util/root.h"

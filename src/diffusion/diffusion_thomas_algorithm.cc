@@ -19,10 +19,9 @@
  * for the compiler-research.org organization.
  */
 
-#include "diffusion_thomas_algorithm.h"
-#include "cart_cell.h"
-#include "hyperparams.h"
-#include "tumor_cell.h"
+#include "diffusion/diffusion_thomas_algorithm.h"
+#include "interfaces/substance_interactor.h"
+#include "params/hyperparams.h"
 #include "core/agent/agent.h"
 #include "core/container/math_array.h"
 #include "core/diffusion/diffusion_grid.h"
@@ -308,22 +307,13 @@ void DiffusionThomasAlgorithm::ComputeConsumptionsSecretions() {
   ResourceManager* rm = bdm::Simulation::GetActive()->GetResourceManager();
   // in a future version of BioDynaMo this should be parallelized getting the
   // agents inside each chemical voxel and treating each voxel independently.
-  // Fixme:this dynamic casting could be optimized in a future version
+
   rm->ForEachAgent([this](bdm::Agent* agent) {
-    if (auto* cell = dynamic_cast<TumorCell*>(agent)) {
-      // Handle TumorCell agents
-      const Real3& pos = cell->GetPosition();
-      const real_t conc = this->GetValue(pos);
-      const real_t new_conc =
-          cell->ConsumeSecreteSubstance(GetContinuumId(), conc);
-      this->ChangeConcentrationBy(pos, new_conc - conc,
-                                  InteractionMode::kAdditive, false);
-    } else if (auto* cell = dynamic_cast<CarTCell*>(agent)) {
-      // Handle CarTCell agents
-      const Real3& pos = cell->GetPosition();
+    if (auto* interactor = dynamic_cast<ISubstanceInteractor*>(agent)) {
+      const Real3& pos = agent->GetPosition();
       const real_t conc = GetValue(pos);
       const real_t new_conc =
-          cell->ConsumeSecreteSubstance(GetContinuumId(), conc);
+          interactor->ConsumeSecreteSubstance(GetContinuumId(), conc);
       ChangeConcentrationBy(pos, new_conc - conc, InteractionMode::kAdditive,
                             false);
     }

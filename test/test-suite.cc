@@ -19,9 +19,9 @@
  * for the compiler-research.org organization.
  */
 
-#include "biodynamo.h"
 #include "core/resource_manager.h"
 #include <gtest/gtest.h>
+#include "biodynamo.h"
 
 // Googletest in combination with the provided CMakeLists.txt allows you to
 // define tests in arbitrary .cc files in the `test/` folder. This file should
