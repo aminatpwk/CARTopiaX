@@ -171,6 +171,7 @@ void TumorCell::SetOncoproteinLevel(real_t level) {
 void TumorCell::SetTransformationRandomRate() {
   const auto* sparams = Simulation::GetActive()->GetParam()->Get<SimParam>();
   // avoid division by zero with kEpsilon
+  // todo: turn into fixed-point implementation
   transformation_random_rate_ =
       1 /
       (std::max(SamplePositiveGaussian(
@@ -205,6 +206,7 @@ void TumorCell::ChangeVolumeExponentialRelaxationEquation(
   const real_t current_fluid = fluid_fraction * current_total_volume;
 
   // Update fluid volume
+  // todo: turn into fixed-point implementation (together with the SetVolume and ComputeConstantsConsumptionSecretion)
   real_t new_fluid =
       current_fluid +
       sparams->dt_cycle * relaxation_rate_fluid *
@@ -298,6 +300,7 @@ Real3 TumorCell::CalculateDisplacement(const InteractionForce* force,
   // Two step Adams-Bashforth approximation of the time derivative for position
   // position(t + dt) ≈ position(t) + dt * [ 1.5 * velocity(t) - 0.5 *
   // velocity(t - dt) ]
+  // todo: turn into fixed-point implementation
   movement_at_next_step += translation_velocity_on_point_mass * sparams->dnew +
                            older_velocity_ * sparams->dold;
 
@@ -345,6 +348,7 @@ void TumorCell::ComputeConstantsConsumptionSecretion() {
   // · (V_k / V_voxel) · S_k · ρ*_k)
   constant1_oxygen_ = 0.;
   // Scale by the volume of the cell in the Voxel and time step
+  // todo: turn into fixed-point implementation
   constant1_immunostimulatory_factor_ =
       immunostimulatory_factor_secretion_rate_ *
       sparams->saturation_density_immunostimulatory_factor *
@@ -352,6 +356,7 @@ void TumorCell::ComputeConstantsConsumptionSecretion() {
   // 1 + dt*(cell_volume/voxel_volume)*(quantity_secretion +
   // quantity_consumption ) = [1 + dt · (V_k / V_voxel) · (S_k + U_k)]
   //  Scale by the volume of the cell in the Voxel and time step
+  // todo: implement fixed-point implementation
   constant2_oxygen_ = 1 + sparams->dt_substances *
                               (new_volume / sparams->voxel_volume) *
                               (oxygen_consumption_rate_);

@@ -182,6 +182,7 @@ Real3 CarTCell::CalculateDisplacement(const InteractionForce* force,
           current_position, &direction_to_immunostimulatory_factor, true);
       // motility = bias * direction_to_immunostimulatory_factor +
       // (1-bias)*random_direction
+	  // todo: turn into fixed-point implementation
       motility =
           sparams->migration_bias_cart * direction_to_immunostimulatory_factor +
           sparams->migration_one_minus_bias_cart * random_direction;
@@ -275,6 +276,7 @@ Real3 CarTCell::CalculateDisplacement(const InteractionForce* force,
   // position(t + dt) ≈ position(t) + dt * [ 1.5 * velocity(t) - 0.5 *
   // velocity(t - dt) ]
   //--------------------------------------------
+  // todo: turn into fixed point implementation
   movement_at_next_step += translation_velocity_on_point_mass * sparams->dnew +
                            older_velocity_ * sparams->dold;
 
@@ -293,6 +295,7 @@ void CarTCell::TryToGetAttachedTo(TumorCell* victim, real_t squared_distance,
   if (!victim->IsAttachedToCart() && !victim->IsDead() &&
       squared_distance < sparams->squared_max_adhesion_distance_cart) {
     // factor of how high is the oncoprotein level of the cancer cell
+    // todo: turn into fixed-point implementation
     real_t oncoprotein_scale_factor =
         (victim->GetOncoproteinLevel() - sparams->oncoprotein_limit) /
         sparams->oncoprotein_difference;
