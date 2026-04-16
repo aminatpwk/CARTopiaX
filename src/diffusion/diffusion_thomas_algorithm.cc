@@ -181,6 +181,28 @@ size_t DiffusionThomasAlgorithm::GetBoxIndex(size_t x, size_t y,
   return z * resolution_ * resolution_ + y * resolution_ + x;
 }
 
+// Convert a world-space position to a flat voxel index.
+// Clamps to [0, resolution_-1] in each axis so boundary agents don't go
+// out-of-bounds.
+size_t DiffusionThomasAlgorithm::PositionToVoxelIndex(
+    const Real3& pos) const {
+  // GetDimensionsPtr()[0] is the grid origin (min_bound) in each axis —
+  // the grid is cubic so the same value applies to x, y, z.
+  const real_t origin = static_cast<real_t>(GetDimensionsPtr()[0]);
+ 
+  auto clamp = [&](real_t coord) -> size_t {
+    int idx = static_cast<int>((coord - origin) / d_space_);
+    if (idx < 0) idx = 0;
+    if (idx >= resolution_) idx = resolution_ - 1;
+    return static_cast<size_t>(idx);
+  };
+ 
+  const size_t xi = clamp(pos[0]);
+  const size_t yi = clamp(pos[1]);
+  const size_t zi = clamp(pos[2]);
+  return GetBoxIndex(xi, yi, zi);
+}
+
 void DiffusionThomasAlgorithm::Step(real_t /*dt*/) {
   // check if diffusion coefficient and decay constant are 0
   // i.e. if we don't need to calculate diffusion update
@@ -308,16 +330,39 @@ void DiffusionThomasAlgorithm::ComputeConsumptionsSecretions() {
   // in a future version of BioDynaMo this should be parallelized getting the
   // agents inside each chemical voxel and treating each voxel independently.
 
+  const size_t num_voxels =
+      static_cast<size_t>(resolution_) *
+      static_cast<size_t>(resolution_) *
+      static_cast<size_t>(resolution_);
+
+  // bucket agents by voxel index;
+  std::vector<std::vector<ISubstanceInteractor*>> voxel_buckets(num_voxels);
+
+
   rm->ForEachAgent([this](bdm::Agent* agent) {
     if (auto* interactor = dynamic_cast<ISubstanceInteractor*>(agent)) {
-      const Real3& pos = agent->GetPosition();
-      const real_t conc = GetValue(pos);
-      const real_t new_conc =
-          interactor->ConsumeSecreteSubstance(GetContinuumId(), conc);
-      ChangeConcentrationBy(pos, new_conc - conc, InteractionMode::kAdditive,
-                            false);
+      const size_t voxel_idx = PositionToVoxelIndex(agent->GetPosition());
+      voxel_buckets[voxel_idx].push_back(interactor);
     }
   });
+
+  // process each voxel independently;
+  const int substance_id = GetContinuumId();
+  const real_t* all_concentrations = GetAllConcentrations();
+ 
+  for (size_t v = 0; v < num_voxels; ++v) {
+    const std::vector<ISubstanceInteractor*>& bucket = voxel_buckets[v];
+    if (bucket.empty()) {
+      continue;
+    }
+
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    real_t conc = all_concentrations[v];
+    for (ISubstanceInteractor* interactor : bucket) {
+      conc = interactor->ConsumeSecreteSubstance(substance_id, conc);
+    }
+    SetConcentration(v, conc);
+  }
 }
 
 }  // namespace bdm
