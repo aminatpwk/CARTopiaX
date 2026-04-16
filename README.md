@@ -89,6 +89,9 @@ The project is organized into the following components:
 - **[`hyperparams.h`](src/params/hyperparams.h) / [`hyperparams.cc`](src/params/hyperparams.cc)**: Contains the [`SimParam`](src/params/hyperparams.h) class with default biological/simulation parameters and treatment schedule definition. Provides [`LoadParams`](src/params/hyperparams.cc) to read configuration from [`params.json`](params.json) and [`PrintParams`](src/params/hyperparams.cc) to display current parameter values.
 
 - **[`utils_aux.h`](src/utils/utils_aux.h) / [`utils_aux.cc`](src/utils/utils_aux.cc)**: Provides utility functions ([`SamplePositiveGaussian`](src/utils/utils_aux.cc), [`CreateSphereOfTumorCells`](src/utils/utils_aux.cc), [`AnalyzeTumor`](src/utils/utils_aux.cc), [`GenerateRandomDirection`](src/utils/utils_aux.cc)) and operations ([`SpawnCart`](src/utils/utils_aux.cc) for dosage administration, [`OutputSummary`](src/utils/utils_aux.cc) for CSV data export to `/output/final_data.csv`).
+
+- **[`substance_interactor.h`](src/interfaces/substance_interactor.h)**: Defines the [`ISubstanceInteractor`](src/interfaces/substance_interactor.h) virtual interface, which must be implemented by any agent that consumes or secretes diffusing substances (oxygen and immunostimulatory factor). Both [`TumorCell`](src/agents/tumor_cell.h) and [`CarTCell`](src/agents/cart_cell.h) implement this interface via the [`ConsumeSecreteSubstance`](src/interfaces/substance_interactor.h) method, allowing the diffusion grid's [`ComputeConsumptionsSecretions`](src/diffusion/diffusion_thomas_algorithm.cc) to dispatch to the correct cell-type logic.
+
 ### Configuration Files
 
 - **[`params.json`](params.json)**: JSON-formatted parameter file for configuring simulation runs without recompilation.
