@@ -22,7 +22,8 @@
 #ifndef CART_CELL_H_
 #define CART_CELL_H_
 
-#include "tumor_cell.h"
+#include "agents/tumor_cell.h"
+#include "interfaces/substance_interactor.h"
 #include "core/agent/agent.h"
 #include "core/agent/agent_pointer.h"
 #include "core/agent/cell.h"
@@ -55,7 +56,7 @@ enum class CarTCellState : int {
 /// simulation. It inherits from the base Cell class and includes specific
 /// behaviors and properties related to CAR-T cell biology, including states,
 /// volume dynamics, and interactions with tumor cells.
-class CarTCell : public Cell {
+class CarTCell : public Cell, public ISubstanceInteractor {
   // NOLINTNEXTLINE(modernize-type-traits)
   BDM_AGENT_HEADER(CarTCell, Cell, 1);
 
@@ -181,7 +182,8 @@ class CarTCell : public Cell {
   /// factor)
   /// @param old_concentration The previous concentration of the substance
   /// @return The new concentration after consumption/secretion
-  real_t ConsumeSecreteSubstance(int substance_id, real_t old_concentration);
+  real_t ConsumeSecreteSubstance(int substance_id,
+                                 real_t old_concentration) override;
 
   /// Compute constants for consumption and secretion
   ///

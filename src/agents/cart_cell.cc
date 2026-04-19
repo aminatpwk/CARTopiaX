@@ -19,10 +19,10 @@
  * for the compiler-research.org organization.
  */
 
-#include "cart_cell.h"
-#include "hyperparams.h"
-#include "tumor_cell.h"
-#include "utils_aux.h"
+#include "agents/cart_cell.h"
+#include "agents/tumor_cell.h"
+#include "params/hyperparams.h"
+#include "utils/utils_aux.h"
 #include "core/agent/agent.h"
 #include "core/agent/agent_pointer.h"
 #include "core/agent/new_agent_event.h"
